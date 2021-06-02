@@ -33,9 +33,23 @@ class _SplashPageState extends State<SplashPage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [FadeAnimation(child: _textTitle())],
+          children: [
+            FadeAnimation(
+              child: _textTitle(),
+            ),
+            FadeAnimation(
+              child: _icon(),
+            )
+          ],
         ),
       ),
+    );
+  }
+
+  Padding _icon() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Image.asset('assets/AppLogo.png'),
     );
   }
 
@@ -43,7 +57,8 @@ class _SplashPageState extends State<SplashPage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-        'GAMECLOTH', style: kAppTitle,
+        'GAMECLOTH',
+        style: kAppTitle,
       ),
     );
   }
