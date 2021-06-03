@@ -5,3 +5,4 @@ const Color primaryTextColor = Colors.white;
 const Color secondaryTextColor = Color(0xFFFDDFCE);
 const Color cartItemColor = Colors.black;
 const Color accentColor = Color(0xFFCE643A);
+Color shadowButton = Color(0xFFe9612c).withOpacity(0.8);
