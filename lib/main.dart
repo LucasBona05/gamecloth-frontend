@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamecloth_frontend/pages/home_page/home_page.dart';
 import 'package:gamecloth_frontend/pages/login_page/login_page.dart';
 import 'package:gamecloth_frontend/pages/splash_page/splash_page.dart';
 import 'package:gamecloth_frontend/utils/style/colors.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/splashPage': (context) => SplashPage(),
         '/loginPage': (context) => LoginPage(),
+        '/homePage': (context) => HomePage(),
       },
     );
   }
