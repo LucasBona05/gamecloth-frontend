@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../utils/constants.dart';
 import 'package:gamecloth_frontend/components/bottom_navbar.dart';
 import 'package:gamecloth_frontend/components/home_product_card.dart';
 import 'package:gamecloth_frontend/controllers/product_controller.dart';
@@ -9,7 +10,6 @@ import 'package:provider/provider.dart';
 class HomePage extends StatefulWidget {
   static final String route = '/homePage';
   const HomePage({Key? key}) : super(key: key);
-
   @override
   _HomePageState createState() => _HomePageState();
 }
