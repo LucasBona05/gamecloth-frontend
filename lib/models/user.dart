@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:gamecloth_frontend/models/product.dart';
+
 User userFromJson(String str) => User.fromJson(json.decode(str));
 
 String userToJson(User data) => json.encode(data.toJson());
@@ -18,14 +20,14 @@ class User {
 
     int? idUser;
     String? username;
-    dynamic? password;
-    dynamic myStore;
+    dynamic password;
+    List<Product>? myStore;
 
     factory User.fromJson(Map<String, dynamic> json) => User(
         idUser: json["idUser"],
         username: json["username"],
         password: json["password"],
-        myStore: json["myStore"],
+        myStore: json["myStore"] ?? [],
     );
 
     Map<String, dynamic> toJson() => {

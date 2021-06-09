@@ -14,6 +14,19 @@ class _BottomNavbarState extends State<BottomNavbar> {
     setState(() {
       _selectedIndex = index;
     });
+    switch (_selectedIndex) {
+      case 0:
+        Navigator.pushNamed(context, '/homePage');
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/myStorePage');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/cartPage');
+        break;
+      default:
+    }
+    // Provider.of<HomeController>(context).changeIndex(_selectedIndex);
   }
 
   @override
@@ -25,24 +38,25 @@ class _BottomNavbarState extends State<BottomNavbar> {
       showUnselectedLabels: false,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-            ),
-            label: 'a'),
+          icon: Icon(
+            Icons.home_outlined,
+          ),
+          label: 'Home',
+        ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.shopping_bag_outlined,
           ),
-          label: '',
+          label: 'Minha Loja',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.shopping_cart_outlined,
           ),
-          label: '',
+          label: 'Carrinho',
         ),
       ],
-      currentIndex: _selectedIndex,
+      currentIndex: 0,
       unselectedItemColor: primaryTextColor,
       selectedItemColor: accentColor,
       onTap: _onItemTapped,

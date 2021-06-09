@@ -22,7 +22,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   _loadData() async {
-    await Future.delayed(new Duration(seconds: 4));
+    await Future.delayed(new Duration(seconds: 2));
     Navigator.pushNamed(context, '/loginPage');
   }
 
