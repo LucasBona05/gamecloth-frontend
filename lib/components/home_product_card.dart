@@ -3,14 +3,14 @@ import 'package:gamecloth_frontend/components/add_button.dart';
 import 'package:gamecloth_frontend/models/product.dart';
 import 'package:gamecloth_frontend/pages/product_page/product_page.dart';
 import 'package:gamecloth_frontend/utils/constants.dart';
+import 'package:gamecloth_frontend/utils/functions/functions.dart';
 import 'package:gamecloth_frontend/utils/style/colors.dart';
 import 'package:intl/intl.dart';
 
 class HomeProductCard extends StatelessWidget {
-  final AsyncSnapshot<List<Product?>> snapshot;
-  final int index;
+  final Product product;
 
-  const HomeProductCard({required this.snapshot, required this.index});
+  const HomeProductCard({required this.product});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,7 +19,7 @@ class HomeProductCard extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.22),
-            blurRadius: 20.0,
+            blurRadius: 23.0,
             offset: Offset(4, 6),
           ),
         ],
@@ -34,8 +34,7 @@ class HomeProductCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (builder) =>
-                    ProductPage(product: snapshot.data?[index]),
+                builder: (builder) => ProductPage(product: product),
               ),
             );
           },
@@ -43,14 +42,13 @@ class HomeProductCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _imageContainer(
-                  context: context, url: snapshot.data?[index]?.image),
-              _cardTitle(name: snapshot.data?[index]?.title),
-              _cardGame(game: snapshot.data?[index]?.game),
+              _imageContainer(context: context, url: product.image),
+              _cardTitle(name: product.title),
+              _cardGame(game: product.game),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _cardPrice(price: snapshot.data?[index]?.price),
+                  _cardPrice(price: product.price),
                   Padding(
                     padding: const EdgeInsets.only(right: 16.0, top: 8),
                     child: GameClothButton(
@@ -59,6 +57,9 @@ class HomeProductCard extends StatelessWidget {
                       width: 24,
                       iconColor: primaryTextColor,
                       iconSize: 20,
+                      onPressed: () {
+                        addProductToCart(context: context, product: product);
+                      },
                     ),
                   ),
                 ],
@@ -70,7 +71,7 @@ class HomeProductCard extends StatelessWidget {
     );
   }
 
-  Padding _cardPrice({required double? price}) {
+  Padding _cardPrice({required double price}) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, left: 16),
       child: RichText(
@@ -89,22 +90,22 @@ class HomeProductCard extends StatelessWidget {
     );
   }
 
-  Padding _cardGame({required String? game}) {
+  Padding _cardGame({required Game game}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Text(
-        '$game',
+        parseEnumGame(game),
         style: kCardGameTextStyle,
         overflow: TextOverflow.ellipsis,
       ),
     );
   }
 
-  Padding _cardTitle({required String? name}) {
+  Padding _cardTitle({required String name}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 2, left: 16),
       child: Text(
-        '$name',
+        name,
         style: kCardTitleTextStyle,
         overflow: TextOverflow.ellipsis,
       ),
@@ -112,19 +113,22 @@ class HomeProductCard extends StatelessWidget {
   }
 
   Padding _imageContainer(
-      {required BuildContext context, required String? url}) {
+      {required BuildContext context, required String url}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           color: backgroundImageCardColor,
           borderRadius: BorderRadius.circular(16.0),
         ),
-        child: Image.network(
-          '$url',
-          height: MediaQuery.of(context).size.height * 0.09,
-          width: MediaQuery.of(context).size.width * 0.34,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16.0),
+          child: Image.network(
+            url,
+            height: MediaQuery.of(context).size.height * 0.09,
+            width: MediaQuery.of(context).size.width * 0.34,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

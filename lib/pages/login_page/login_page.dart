@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gamecloth_frontend/components/game_cloth_label_button.dart';
+import 'package:gamecloth_frontend/components/simple_error_dialog.dart';
+import 'package:gamecloth_frontend/controllers/user_controller.dart';
 
 import '../../utils/constants.dart';
-import '../../utils/style/colors.dart';
 
 class LoginPage extends StatefulWidget {
-  static final String route = '/loginPage';
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -14,84 +15,55 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: new Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SafeArea(
             child: Image.asset('assets/AppLogo.png'),
           ),
-          Center(
-            child: new Text(
-              "GAMECLOTH",
-              style: kAppTitle,
-            ),
-          ),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(left: 40),
-            child: new Text(
-              "The simple way to",
-              style: kAppDescript_1,
-            ),
+          Text(
+            "GAMECLOTH",
+            style: kAppTitle,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 40),
-            child: new Text(
-              "find any skin!",
-              style: kAppDescript_2,
+            padding: const EdgeInsets.only(right: 32.0, top: 24, bottom: 32),
+            child: RichText(
+              text: TextSpan(
+                text: 'A maneira mais simples de\n',
+                style: kAppDescript_1,
+                children: [
+                  TextSpan(
+                    text: 'encontrar skins!',
+                    style: kAppDescript_2,
+                  ),
+                ],
+              ),
             ),
           ),
-          SizedBox(height: 30),
-          Center(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, '/homePage');
-              },
-              child: new Container(
-                padding: EdgeInsets.fromLTRB(110, 0, 20, 0),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: Center(
+              child: GameClothLabelButton(
                 width: 300,
                 height: 60,
-                decoration: BoxDecoration(
-                  color: accentColor,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: shadowButton,
-                      spreadRadius: 0,
-                      blurRadius: 12,
-                      offset: Offset(2, 2),
-                    ),
-                  ],
-                ),
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    new Text(
-                      "Acessar",
-                      style: kButtonApp,
-                    ),
-                    new Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
-                    )
-                  ],
-                ),
+                label: 'Acessar',
+                icon: Icons.arrow_forward,
+                onTap: () async {
+                  bool response = await UserController()
+                      .signIn(username: 'lucas', password: 'lucas');
+                  if (response) {
+                    Navigator.pushNamed(context, '/homePage');
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return SimpleErrorDialog();
+                      },
+                    );
+                  }
+                },
               ),
             ),
           ),
-          SizedBox(height: 20),
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              new Text(
-                "Don't have account?",
-                style: kButtonApp,
-              ),
-              new Text(
-                "  Sign Up",
-                style: kTextRegister,
-              ),
-            ],
-          )
         ],
       ),
     );
